@@ -14,7 +14,7 @@ const Sidebar: React.FC = () => {
       {/* Sidebar Toggle Button */}
       <button
         onClick={toggleSidebar}
-        className="fixed top-4 left-4 z-50 text-white bg-gray-800 p-2 rounded-full shadow-lg md:hidden">
+        className="fixed top-6 right-4  z-50 text-white bg-gray-800 p-2 rounded-full shadow-lg md:hidden">
         {isOpen ? "Close" : "Menu"}
       </button>
 
@@ -24,7 +24,7 @@ const Sidebar: React.FC = () => {
           isOpen ? "translate-x-0" : "-translate-x-full"
         } w-64 h-full bg-gray-800 text-white flex flex-col transition-transform duration-300 md:translate-x-0`}>
         {/* Sidebar Header */}
-        <div className="flex items-center justify-between p-4">
+        <div className="flex items-center justify-between p-4 ">
           <h2 className="text-lg font-bold">Menu</h2>
           <button
             onClick={toggleSidebar}
