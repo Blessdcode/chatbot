@@ -2,6 +2,17 @@ import { createContext, ReactNode, useState } from "react"
 import run from "../api/gemini"
 // import run from "../config/gemini"
 
+export interface GeminiContextType {
+  input: string;
+  setInput: (value: string) => void;
+  recentPrompt: string;
+  resultData: string;
+  showResult: boolean;
+  onSent: () => void;
+  loading: boolean;
+}
+
+
 interface ChatContextType {
   input: string;
   setInput: (value: string) => void;

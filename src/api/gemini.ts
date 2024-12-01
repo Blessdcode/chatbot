@@ -9,14 +9,14 @@ const model = genAI.getGenerativeModel({
 });
 
 const generationConfig = {
-  temperature: 1,
+  temperature: 2,
   topP: 0.95,
   topK: 64,
   maxOutputTokens: 8192,
   responseMimeType: "text/plain",
 };
 
-async function run(prompt) {
+async function run(prompt:string) {
   const chatSession = model.startChat({
     generationConfig,
     // safetySettings: Adjust safety settings

@@ -1,17 +1,24 @@
-import { MdAddPhotoAlternate } from "react-icons/md";
 import styles from "../styles";
-import { useContext, useRef, useEffect } from "react";
-import { Context } from "../context/gemini.context";
-import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
+import {
+  useContext,
+  useRef,
+  useEffect,
+  KeyboardEvent,
+  ChangeEvent,
+} from "react";
+import { Context, GeminiContextType } from "../context/gemini.context"; 
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react"; 
 import { IoMdSend } from "react-icons/io";
 
-const Content = () => {
-  const context = useContext(Context);
-  const { user } = useKindeAuth();
-  const resultRef = useRef(null); 
+
+
+const Content: React.FC = () => {
+  const context = useContext<GeminiContextType | null>(Context); 
+  const { user } = useKindeAuth(); 
+  const resultRef = useRef<HTMLDivElement | null>(null);
 
   if (!context) {
-    throw new Error("YourComponent must be used within a ContextProvider");
+    throw new Error("Content must be used within a ContextProvider");
   }
 
   const {
@@ -21,16 +28,16 @@ const Content = () => {
     resultData,
     showResult,
     onSent,
-    newChat,
     loading,
   } = context;
 
   useEffect(() => {
-    const inputField = document.querySelector("input[type='text']");
+    const inputField =
+      document.querySelector<HTMLInputElement>("input[type='text']");
     if (inputField) inputField.focus();
   }, []);
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && input.trim()) {
       onSent();
     }
@@ -40,10 +47,10 @@ const Content = () => {
     if (resultRef.current) {
       const container = resultRef.current;
       if (showResult) {
-        container.style.minHeight = "300px"; 
-        container.style.maxHeight = "600px"; 
+        container.style.minHeight = "300px";
+        container.style.maxHeight = "600px";
       } else {
-        container.style.minHeight = "0px"; 
+        container.style.minHeight = "0px";
       }
     }
   }, [showResult]);
@@ -57,7 +64,6 @@ const Content = () => {
               Hello, {user?.given_name || "John Deo"}
             </span>
           </p>
-
           <p className="text-slate-400">How can I help you today?</p>
         </div>
       ) : (
@@ -88,10 +94,11 @@ const Content = () => {
             placeholder="Enter a prompt here..."
             className="flex-1 bg-transparent border-none outline-none p-2 text-lg"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyPress} 
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setInput(e.target.value)
+            }
+            onKeyDown={handleKeyPress}
           />
-
           <div className="flex gap-4 items-center">
             {input && (
               <IoMdSend

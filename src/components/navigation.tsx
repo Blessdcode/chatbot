@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styles from "../styles";
 
 import { FaRobot } from "react-icons/fa6";

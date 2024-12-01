@@ -2,31 +2,38 @@ import React, { useState, useContext, useEffect } from "react";
 import {
   FaHome,
   FaUser,
-  FaCog,
   FaQuestionCircle,
   FaTrashAlt,
+  FaPlus,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import { Context } from "../context/gemini.context";
-import { FaMessage, FaPlus } from "react-icons/fa6";
+import { FaMessage } from "react-icons/fa6";
 
 const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [storedPrompts, setStoredPrompts] = useState<string[]>([]);
   const context = useContext(Context);
-  const [storedPrompt, setStoredPrompts] = useState<string[]>([]);
+
+  if (!context) {
+    throw new Error("Sidebar must be used within a ContextProvider.");
+  }
+
   const { onSent, prevPrompt, setRecentPrompt, newChat, setPrevPrompt } =
     context;
 
+  // Load prompts from localStorage on mount
   useEffect(() => {
-    const savedPrompts = localStorage.getItem(" ");
+    const savedPrompts = localStorage.getItem("savedPrompts");
     if (savedPrompts) {
-      const parsedPrompts = JSON.parse(savedPrompts);
+      const parsedPrompts: string[] = JSON.parse(savedPrompts);
       setStoredPrompts(parsedPrompts);
       setPrevPrompt(parsedPrompts);
     }
-  }, []);
+  }, [setPrevPrompt]);
 
+  // Save prompts to localStorage whenever prevPrompt changes
   useEffect(() => {
     localStorage.setItem("savedPrompts", JSON.stringify(prevPrompt));
     setStoredPrompts(prevPrompt);
@@ -34,17 +41,17 @@ const Sidebar: React.FC = () => {
 
   const loadPrompt = async (prompt: string) => {
     setRecentPrompt(prompt);
-    await onSent(prompt);
+    await onSent(prompt); // Call context method with selected prompt
   };
 
   const deletePrompt = (prompt: string) => {
-    const updatedPrompts = storedPrompt.filter((item) => item !== prompt);
+    const updatedPrompts = storedPrompts.filter((item) => item !== prompt);
     localStorage.setItem("savedPrompts", JSON.stringify(updatedPrompts));
     setStoredPrompts(updatedPrompts);
   };
 
   const toggleSidebar = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   return (
@@ -52,7 +59,7 @@ const Sidebar: React.FC = () => {
       {/* Sidebar Toggle Button */}
       <button
         onClick={toggleSidebar}
-        className="fixed top-6 right-4  z-50 text-white bg-gray-800 p-2 rounded-full shadow-lg md:hidden">
+        className="fixed top-6 right-4 z-50 text-white bg-gray-800 p-2 rounded-full shadow-lg md:hidden">
         {isOpen ? "Close" : "Menu"}
       </button>
 
@@ -62,7 +69,7 @@ const Sidebar: React.FC = () => {
           isOpen ? "translate-x-0" : "-translate-x-full"
         } w-64 h-full bg-gray-800 text-white flex flex-col transition-transform duration-300 md:translate-x-0`}>
         {/* Sidebar Header */}
-        <div className="flex items-center justify-between p-4 ">
+        <div className="flex items-center justify-between p-4">
           <h2 className="text-lg font-bold">Menu</h2>
           <button
             onClick={toggleSidebar}
@@ -70,20 +77,21 @@ const Sidebar: React.FC = () => {
             &times;
           </button>
         </div>
+
         {/* New Chat */}
         <div className="flex flex-col gap-4 p-4">
           <div
-            onClick={() => newChat()}
-            className="mt-[10px] inline-flex items-center gap-[10px] py-[10px] px-[15px] text-[14px] text-gray-700 cursor-pointer bg-gray-300 rounded-full">
-            <FaPlus className="text-2xl" />
+            onClick={newChat}
+            className="mt-2 inline-flex items-center gap-2 py-2 px-4 text-sm text-gray-700 cursor-pointer bg-gray-300 rounded-full hover:bg-gray-400">
+            <FaPlus className="text-lg" />
             <p>New Chat</p>
           </div>
         </div>
 
+        {/* Recent Prompts */}
         <div className="flex flex-col animate-fadeIn duration-1000 p-4">
-          <p className="mt-7 mb-5">Recent</p>
-
-          {storedPrompt.map((item, index) => (
+          <p className="mt-7 mb-5 text-gray-400">Recent</p>
+          {storedPrompts.map((item, index) => (
             <div
               key={index}
               className="flex items-center justify-between gap-2 p-2 pr-4 rounded-full text-slate-700 bg-gray-200 hover:bg-gray-300 focus:ring focus:ring-blue-300">
@@ -91,7 +99,9 @@ const Sidebar: React.FC = () => {
                 onClick={() => loadPrompt(item)}
                 className="flex items-center gap-2 cursor-pointer">
                 <FaMessage className="text-lg" />
-                <span>{item.slice(0, 18)}...</span>
+                <span>
+                  {item.length > 18 ? `${item.slice(0, 18)}...` : item}
+                </span>
               </div>
               <button
                 onClick={() => deletePrompt(item)}
@@ -116,14 +126,9 @@ const Sidebar: React.FC = () => {
             <FaUser className="text-xl" />
             <span>Profile</span>
           </Link>
-          {/* <Link
-            to="/settings"
-            className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-700">
-            <FaCog className="text-xl" />
-            <span>Settings</span>
-          </Link> */}
           <a
             target="_blank"
+            rel="noopener noreferrer"
             href="https://support.google.com/gemini/?hl=en#topic=15280100"
             className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-700">
             <FaQuestionCircle className="text-xl" />
