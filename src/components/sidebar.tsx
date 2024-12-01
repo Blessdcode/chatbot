@@ -47,18 +47,19 @@ const Sidebar: React.FC = () => {
             <FaUser className="text-xl" />
             <span>Profile</span>
           </Link>
-          <Link
+          {/* <Link
             to="/settings"
             className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-700">
             <FaCog className="text-xl" />
             <span>Settings</span>
-          </Link>
-          <Link
-            to="/help"
+          </Link> */}
+          <a
+            target="_blank"
+           href="https://support.google.com/gemini/?hl=en#topic=15280100"
             className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-700">
             <FaQuestionCircle className="text-xl" />
             <span>Help</span>
-          </Link>
+          </a>
         </nav>
       </div>
     </>

@@ -3,9 +3,8 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Content from "./components/content";
 import Navigation from "./components/navigation";
 import styles from "./styles";
-
-
-
+import { KindeProvider } from "@kinde-oss/kinde-auth-react";
+import Profile from "./pages/profile";
 
 const Layout = () => {
   return (
@@ -16,7 +15,6 @@ const Layout = () => {
   );
 };
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,7 +24,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <Content />,
       },
-     
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
     ],
   },
 ]);
@@ -34,7 +35,13 @@ function App() {
   return (
     <div className={` bg-slate-900 text-white h-screen`}>
       {" "}
-      <RouterProvider router={router} />{" "}
+      <KindeProvider
+        clientId="8e3d17631d4f4e5188e4ec53eae8b9d7"
+        domain="https://bnjmn.kinde.com"
+        redirectUri="http://localhost:5173"
+        logoutUri="http://localhost:5173">
+        <RouterProvider router={router} />{" "}
+      </KindeProvider>
     </div>
   );
 }
