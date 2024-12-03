@@ -10,7 +10,7 @@ import { ChatContextType, Context } from "../context/gemini.context";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react"; 
 import { IoMdSend } from "react-icons/io";
 
-
+import DOMPurify from "dompurify";
 
 const Content: React.FC = () => {
   const context = useContext<ChatContextType | null>(Context); 
@@ -55,13 +55,17 @@ const Content: React.FC = () => {
     }
   }, [showResult]);
 
+    const sanitizedData = () => ({
+      __html: DOMPurify.sanitize(resultData),
+    });
+
   return (
     <div className={`${styles.boxWidth} md:ml-28`}>
       {!showResult ? (
         <div className="my-12 text-[56px] text-slate-500 font-semibold p-5">
           <p>
             <span className="bg-gradient-to-r from-[#368ddd] to-[#ff5546] bg-clip-text text-transparent">
-              Hello, {user?.given_name  || "John Deo"}
+              Hello, {user?.given_name || "John Deo"}
             </span>
           </p>
           <p className="text-slate-400">How can I help you today?</p>
@@ -81,8 +85,9 @@ const Content: React.FC = () => {
             </div>
           ) : (
             <p
-              dangerouslySetInnerHTML={{ __html: resultData }}
-              className={`${styles.paragraph} font-[400] leading-[1.8] min-h-[600px] w-full`}></p>
+              // dangerouslySetInnerHTML={{ __html: resultData }}
+              dangerouslySetInnerHTML={sanitizedData()}
+              className={`${styles.paragraph} font-[400] leading-[1.8] md:max-h-[300px] w-full `}></p>
           )}
         </div>
       )}
