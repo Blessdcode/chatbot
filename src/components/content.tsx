@@ -6,14 +6,14 @@ import {
   KeyboardEvent,
   ChangeEvent,
 } from "react";
-import { Context, GeminiContextType } from "../context/gemini.context"; 
+import { ChatContextType, Context } from "../context/gemini.context"; 
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react"; 
 import { IoMdSend } from "react-icons/io";
 
 
 
 const Content: React.FC = () => {
-  const context = useContext<GeminiContextType | null>(Context); 
+  const context = useContext<ChatContextType | null>(Context); 
   const { user } = useKindeAuth(); 
   const resultRef = useRef<HTMLDivElement | null>(null);
 
