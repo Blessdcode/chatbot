@@ -5,7 +5,7 @@ import Sidebar from "./sidebar";
 
 const Navigation = () => {
   return (
-    <div className={`${styles.flexBetween}`}>
+    <div className={`${styles.flexBetween} md:ml-28`}>
       <div className="px-4">
         <div className={`${styles.flexBetween}`}>
           <FaRobot size={48} />

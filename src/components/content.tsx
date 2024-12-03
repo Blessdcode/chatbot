@@ -56,7 +56,7 @@ const Content: React.FC = () => {
   }, [showResult]);
 
   return (
-    <div className={`${styles.boxWidth}`}>
+    <div className={`${styles.boxWidth} md:ml-28`}>
       {!showResult ? (
         <div className="my-12 text-[56px] text-slate-500 font-semibold p-5">
           <p>
