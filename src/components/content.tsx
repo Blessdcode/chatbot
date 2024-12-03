@@ -61,7 +61,7 @@ const Content: React.FC = () => {
         <div className="my-12 text-[56px] text-slate-500 font-semibold p-5">
           <p>
             <span className="bg-gradient-to-r from-[#368ddd] to-[#ff5546] bg-clip-text text-transparent">
-              Hello, {user?.given_name || "John Deo"}
+              Hello, {user?.given_name  || "John Deo"}
             </span>
           </p>
           <p className="text-slate-400">How can I help you today?</p>

@@ -41,7 +41,7 @@ const Sidebar: React.FC = () => {
 
   const loadPrompt = async (prompt: string) => {
     setRecentPrompt(prompt);
-    await onSent(prompt); // Call context method with selected prompt
+    await onSent(prompt); 
   };
 
   const deletePrompt = (prompt: string) => {
@@ -94,7 +94,7 @@ const Sidebar: React.FC = () => {
           {storedPrompts.map((item, index) => (
             <div
               key={index}
-              className="flex items-center justify-between gap-2 p-2 pr-4 rounded-full text-slate-700 bg-gray-200 hover:bg-gray-300 focus:ring focus:ring-blue-300">
+              className="flex items-center justify-between gap-2 p-2 pr-4 rounded-full text-slate-700 bg-gray-200 hover:bg-gray-300 focus:ring focus:ring-blue-300 mb-4">
               <div
                 onClick={() => loadPrompt(item)}
                 className="flex items-center gap-2 cursor-pointer">
