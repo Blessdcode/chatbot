@@ -1,4 +1,4 @@
-import { useKindeAuth } from "@kinde-oss/kinde-auth-react"; // Ensure correct typings for useKindeAuth
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react"; 
 import styles from "../styles";
 
 const Profile: React.FC = () => {
@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
         <div className="flex flex-col items-center gap-6 mt-12">
           <p className="text-lg text-gray-200">Please sign in or Login!</p>
           <button
-            onClick={() => login()} // Ensure login is invoked
+            onClick={() => login()} 
             type="button"
             className="px-6 py-3 text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
             Log In

@@ -85,7 +85,6 @@ const Content: React.FC = () => {
             </div>
           ) : (
             <p
-              // dangerouslySetInnerHTML={{ __html: resultData }}
               dangerouslySetInnerHTML={sanitizedData()}
               className={`${styles.paragraph} font-[400] leading-[1.8] md:max-h-[300px] w-full `}></p>
           )}
